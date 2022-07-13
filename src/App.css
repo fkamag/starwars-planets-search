@@ -39,3 +39,20 @@
     transform: rotate(360deg);
   }
 }
+
+.logo {
+  width: 25%;
+}
+
+.table {
+  border: 1px solid black;
+}
+
+.table th {
+  background: #317231;
+  border: 1px solid black;
+}
+
+.table td {
+  border: 1px solid black;
+}
