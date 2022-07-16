@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import FilterByName from '../components/FilterByName';
 import Table from '../components/Table';
-import MyContext from '../context/MyContext';
+
 import projectIntro from '../images/projectIntro.gif';
 
 function Page() {
-  const value = useContext(MyContext);
-  console.log(value);
   return (
     <div className="App-header">
       <img className="logo" src={ projectIntro } alt="logo" />
-      <input type="text" placeholder="Faça sua busca aqui" />
+      <FilterByName />
       <Table />
     </div>
   );

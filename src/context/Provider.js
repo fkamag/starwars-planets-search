@@ -4,6 +4,7 @@ import MyContext from './MyContext';
 
 function Provider({ children }) {
   const [listPlanets, setListPlanets] = useState([]);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const getListPlanets = async () => {
@@ -13,7 +14,6 @@ function Provider({ children }) {
       data.forEach((planet) => {
         delete planet.residents;
       });
-      console.log(data);
       setListPlanets(data);
     };
     getListPlanets();
@@ -22,6 +22,8 @@ function Provider({ children }) {
   const context = {
     listPlanets,
     setListPlanets,
+    name,
+    setName,
   };
 
   return (
