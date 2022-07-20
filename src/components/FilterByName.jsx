@@ -7,7 +7,7 @@ function FilterByName() {
   return (
     <input
       type="text"
-      placeholder="Faça sua busca aqui"
+      placeholder="Search here"
       data-testid="name-filter"
       value={ name }
       onChange={ (event) => setName(event.target.value) }

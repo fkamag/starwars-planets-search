@@ -3,14 +3,16 @@ import MyContext from '../context/MyContext';
 
 function Table() {
   const { listPlanets, name } = useContext(MyContext);
-  const filteredByName = listPlanets.filter((planet) => planet.name.includes(name));
+  const listFiltered = listPlanets
+    .filter((planet) => planet.name.includes(name));
+    // .filter((planet) => planet. );
   return (
     <div>
-      <p>
+      {/* <p>
         Nome buscado:
         { ' ' }
         { name }
-      </p>
+      </p> */}
       <table className="table">
         <thead>
           <tr>
@@ -31,7 +33,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            filteredByName.map((planet) => (
+            listFiltered.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>

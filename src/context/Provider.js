@@ -2,9 +2,23 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
+const INITIAL_OPTIONS = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function Provider({ children }) {
   const [listPlanets, setListPlanets] = useState([]);
+  const [optionsColumn, setOptionsColumn] = useState(INITIAL_OPTIONS);
+  const [columnValue, setColumnValue] = useState(['population']);
+  const [comparisonValue, setComparisonValue] = useState('maior que');
+  const [numberValue, setNumberValue] = useState(0);
   const [name, setName] = useState('');
+  const [filter, setFilter] = useState({ filter: {} });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     const getListPlanets = async () => {
@@ -22,8 +36,20 @@ function Provider({ children }) {
   const context = {
     listPlanets,
     setListPlanets,
+    optionsColumn,
+    setOptionsColumn,
+    columnValue,
+    setColumnValue,
+    comparisonValue,
+    setComparisonValue,
+    numberValue,
+    setNumberValue,
     name,
     setName,
+    filter,
+    setFilter,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   return (
