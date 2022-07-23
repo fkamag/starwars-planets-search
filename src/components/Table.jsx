@@ -2,17 +2,28 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { listPlanets, name } = useContext(MyContext);
-  const listFiltered = listPlanets
+  const { listPlanets, name, filterByNumericValues } = useContext(MyContext);
+  let listFiltered = listPlanets
     .filter((planet) => planet.name.includes(name));
-    // .filter((planet) => planet. );
+  if (filterByNumericValues.length > 0) {
+    filterByNumericValues.forEach((filter) => {
+      if (filter.comparison === 'maior que') {
+        listFiltered = listFiltered
+          .filter((planet) => planet[filter.column] > filter.value);
+      }
+      if (filter.comparison === 'menor que') {
+        listFiltered = listFiltered
+          .filter((planet) => planet[filter.column] < filter.value);
+      }
+      if (filter.comparison === 'igual a') {
+        listFiltered = listFiltered
+          .filter((planet) => planet[filter.column] === filter.value);
+      }
+    });
+  }
+
   return (
     <div>
-      {/* <p>
-        Nome buscado:
-        { ' ' }
-        { name }
-      </p> */}
       <table className="table">
         <thead>
           <tr>
