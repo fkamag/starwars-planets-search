@@ -9,15 +9,15 @@ function Table() {
     filterByNumericValues.forEach((filter) => {
       if (filter.comparison === 'maior que') {
         listFiltered = listFiltered
-          .filter((planet) => planet[filter.column] > filter.value);
+          .filter((planet) => Number(planet[filter.column]) > Number(filter.value));
       }
       if (filter.comparison === 'menor que') {
         listFiltered = listFiltered
-          .filter((planet) => planet[filter.column] < filter.value);
+          .filter((planet) => Number(planet[filter.column]) < Number(filter.value));
       }
       if (filter.comparison === 'igual a') {
         listFiltered = listFiltered
-          .filter((planet) => planet[filter.column] === filter.value);
+          .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
       }
     });
   }
