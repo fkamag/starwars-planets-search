@@ -44,6 +44,10 @@ function FilterByNumber() {
     ]);
   }
 
+  function removeFilters() {
+    setFilterByNumericValues([]);
+  }
+
   return (
     <div>
       <div>
@@ -91,7 +95,7 @@ function FilterByNumber() {
       <div>
         { filterByNumericValues.length > 0 ? (
           filterByNumericValues.map((filt, index) => (
-            <div key={ index } className="filterSelected">
+            <div key={ index } className="filterSelected" data-testid="filter">
               <span>{ filt.column }</span>
               <span>{ filt.comparison }</span>
               <span>{ filt.value }</span>
@@ -106,6 +110,14 @@ function FilterByNumber() {
           ))
         ) : <br />}
       </div>
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ removeFilters }
+      >
+        Remover todas filtragens
+      </button>
+
     </div>
   );
 }
