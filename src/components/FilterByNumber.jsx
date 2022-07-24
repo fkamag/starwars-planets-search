@@ -3,7 +3,8 @@ import MyContext from '../context/MyContext';
 
 function FilterByNumber() {
   const { filter, setFilter, optionsColumn, setOptionsColumn,
-    filterByNumericValues, setFilterByNumericValues,
+    filterByNumericValues, setFilterByNumericValues, optionsSort,
+    order, setOrder,
   } = useContext(MyContext);
 
   const INITIAL_STATE = {
@@ -42,6 +43,17 @@ function FilterByNumber() {
       ...optionsColumn,
       event.target.value,
     ]);
+  }
+
+  function handleChangeSort({ target: { name, value } }) {
+    setOrder({
+      ...order,
+      [name]: value,
+    });
+  }
+
+  function handleClickSort() {
+    console.log('criar lógica para ordenar');
   }
 
   function removeFilters() {
@@ -110,14 +122,60 @@ function FilterByNumber() {
           ))
         ) : <br />}
       </div>
-      <button
-        type="button"
-        data-testid="button-remove-filters"
-        onClick={ removeFilters }
-      >
-        Remover todas filtragens
-      </button>
-
+      <div>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ removeFilters }
+        >
+          Remove all filters
+        </button>
+      </div>
+      <div>
+        <label htmlFor="column">
+          Column
+          <select
+            data-testid="column-sort"
+            id="column"
+            name="column"
+            value={ order.column }
+            onChange={ handleChangeSort }
+          >
+            {optionsSort.map((option, index) => (
+              <option value={ option } key={ index }>{option}</option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="sortAsc">
+          <input
+            type="radio"
+            id="sortAsc"
+            name="sort"
+            data-testid="column-sort-input-asc"
+            value="ASC"
+            onChange={ handleChangeSort }
+          />
+          Ascending Sort
+        </label>
+        <label htmlFor="sortDesc">
+          <input
+            type="radio"
+            id="sortDesc"
+            name="sort"
+            data-testid="column-sort-input-desc"
+            value="DESC"
+            onChange={ handleChangeSort }
+          />
+          Descending Sort
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ handleClickSort }
+        >
+          Sort
+        </button>
+      </div>
     </div>
   );
 }

@@ -19,6 +19,11 @@ function Provider({ children }) {
   const [name, setName] = useState('');
   const [filter, setFilter] = useState({ filter: {} });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [optionsSort, setOptionsSort] = useState(INITIAL_OPTIONS);
+  const [order, setOrder] = useState({
+    column: 'population',
+    sort: 'ASC',
+  });
 
   useEffect(() => {
     const getListPlanets = async () => {
@@ -50,6 +55,10 @@ function Provider({ children }) {
     setFilter,
     filterByNumericValues,
     setFilterByNumericValues,
+    optionsSort,
+    setOptionsSort,
+    order,
+    setOrder,
   };
 
   return (
