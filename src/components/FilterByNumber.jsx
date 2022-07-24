@@ -4,7 +4,7 @@ import MyContext from '../context/MyContext';
 function FilterByNumber() {
   const { filter, setFilter, optionsColumn, setOptionsColumn,
     filterByNumericValues, setFilterByNumericValues, optionsSort,
-    order, setOrder,
+    order, setOrder, setIsSort,
   } = useContext(MyContext);
 
   const INITIAL_STATE = {
@@ -53,7 +53,7 @@ function FilterByNumber() {
   }
 
   function handleClickSort() {
-    console.log('criar lógica para ordenar');
+    setIsSort(true);
   }
 
   function removeFilters() {
@@ -153,6 +153,7 @@ function FilterByNumber() {
             name="sort"
             data-testid="column-sort-input-asc"
             value="ASC"
+            checked
             onChange={ handleChangeSort }
           />
           Ascending Sort

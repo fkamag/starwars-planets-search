@@ -24,6 +24,7 @@ function Provider({ children }) {
     column: 'population',
     sort: 'ASC',
   });
+  const [isSort, setIsSort] = useState(false);
 
   useEffect(() => {
     const getListPlanets = async () => {
@@ -59,6 +60,8 @@ function Provider({ children }) {
     setOptionsSort,
     order,
     setOrder,
+    isSort,
+    setIsSort,
   };
 
   return (

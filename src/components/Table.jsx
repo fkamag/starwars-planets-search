@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { listPlanets, name, filterByNumericValues } = useContext(MyContext);
+  const { listPlanets, name, filterByNumericValues, isSort } = useContext(MyContext);
   let listFiltered = listPlanets
     .filter((planet) => planet.name.includes(name));
+
   if (filterByNumericValues.length > 0) {
     filterByNumericValues.forEach((filter) => {
       if (filter.comparison === 'maior que') {
@@ -20,6 +21,12 @@ function Table() {
           .filter((planet) => Number(planet[filter.column]) === Number(filter.value));
       }
     });
+  }
+
+  listFiltered = listFiltered.sort((a, b) => a.name.localeCompare(b.name));
+
+  if (isSort) {
+    console.log('fazer a lógica do sort');
   }
 
   return (
@@ -46,7 +53,7 @@ function Table() {
           {
             listFiltered.map((planet) => (
               <tr key={ planet.name }>
-                <td>{planet.name}</td>
+                <td data-testid="planet-name">{planet.name}</td>
                 <td>{planet.rotation_period}</td>
                 <td>{planet.orbital_period}</td>
                 <td>{planet.diameter}</td>
