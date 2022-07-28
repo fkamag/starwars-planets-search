@@ -4,7 +4,7 @@ import MyContext from '../context/MyContext';
 function FilterByNumber() {
   const { filter, setFilter, optionsColumn, setOptionsColumn,
     filterByNumericValues, setFilterByNumericValues, optionsSort,
-    order, setOrder, setIsSort,
+    order, setOrder,
   } = useContext(MyContext);
 
   const INITIAL_STATE = {
@@ -49,15 +49,24 @@ function FilterByNumber() {
     setOrder({
       ...order,
       [name]: value,
+      isSort: false,
     });
   }
 
   function handleClickSort() {
-    setIsSort(true);
+    setOrder({
+      ...order,
+      isSort: true,
+    });
   }
 
   function removeFilters() {
     setFilterByNumericValues([]);
+    setOptionsColumn(optionsSort);
+    setOrder({
+      ...order,
+      isSort: false,
+    });
   }
 
   return (
@@ -123,15 +132,6 @@ function FilterByNumber() {
         ) : <br />}
       </div>
       <div>
-        <button
-          type="button"
-          data-testid="button-remove-filters"
-          onClick={ removeFilters }
-        >
-          Remove all filters
-        </button>
-      </div>
-      <div>
         <label htmlFor="column">
           Column
           <select
@@ -153,7 +153,7 @@ function FilterByNumber() {
             name="sort"
             data-testid="column-sort-input-asc"
             value="ASC"
-            checked
+            // checked
             onChange={ handleChangeSort }
           />
           Ascending Sort
@@ -175,6 +175,15 @@ function FilterByNumber() {
           onClick={ handleClickSort }
         >
           Sort
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ removeFilters }
+        >
+          Remove all filters
         </button>
       </div>
     </div>

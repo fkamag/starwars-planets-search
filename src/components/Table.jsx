@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import MyContext from '../context/MyContext';
 
 function Table() {
-  const { listPlanets, name, filterByNumericValues, isSort } = useContext(MyContext);
+  const { listPlanets, name, filterByNumericValues, order } = useContext(MyContext);
   let listFiltered = listPlanets
     .filter((planet) => planet.name.includes(name));
 
@@ -25,8 +25,24 @@ function Table() {
 
   listFiltered = listFiltered.sort((a, b) => a.name.localeCompare(b.name));
 
-  if (isSort) {
-    console.log('fazer a lógica do sort');
+  if (order.isSort) {
+    console.log(listFiltered);
+    if (order.sort === 'ASC') {
+      const numberCompare = -1;
+      listFiltered = listFiltered.sort((a, b) => {
+        if (a[order.column] === 'unknown') return 1;
+        if (b[order.column] === 'unknown') return numberCompare;
+        return Number(a[order.column]) - Number(b[order.column]);
+      });
+    }
+    if (order.sort === 'DESC') {
+      const numberCompare = -1;
+      listFiltered = listFiltered.sort((a, b) => {
+        if (a[order.column] === 'unknown') return 1;
+        if (b[order.column] === 'unknown') return numberCompare;
+        return Number(b[order.column]) - Number(a[order.column]);
+      });
+    }
   }
 
   return (
