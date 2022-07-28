@@ -2,8 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 
-test('I am your test', () => {
+test('Page.js', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Hello, App!/i);
-  expect(linkElement).toBeInTheDocument();
+  const imgElement = screen.getByRole('img', {name: 'logo'});
+  expect(imgElement).toBeInTheDocument();
+});
+
+test('FilterByName', () => {
+  render(<App />);
+  const searchElement = screen.getByPlaceholderText('Search here')
+  expect(searchElement).toBeInTheDocument();
 });
