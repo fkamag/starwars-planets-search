@@ -29,12 +29,45 @@ test('FilterByNumber', () => {
   const comparisonSearch = screen.getByTestId('comparison-filter');
   expect(comparisonSearch).toBeInTheDocument();
   expect(comparisonSearch).toHaveValue('maior que');
-  userEvent.selectOptions(comparisonSearch, 'igual a');
-  expect(comparisonSearch).toHaveValue('igual a');
+  userEvent.selectOptions(comparisonSearch, 'menor que');
+  expect(comparisonSearch).toHaveValue('menor que');
 
   const valueSearch = screen.getByTestId('value-filter');
   expect(valueSearch).toBeInTheDocument();
   expect(valueSearch).toHaveValue(0);
-  userEvent.type(valueSearch, '10');
-  expect(valueSearch).toHaveValue(10);
+  userEvent.type(valueSearch, '10000');
+  expect(valueSearch).toHaveValue(10000);
+
+  const buttonFilter = screen.getByTestId('button-filter');
+  expect(buttonFilter).toBeInTheDocument();
+  userEvent.click(buttonFilter);
+
+  const listFilters = screen.getByTestId('filter');
+  expect(listFilters).toBeInTheDocument();
+  
+  const textListFilters = screen.getAllByText('diameter');
+  expect(textListFilters).toHaveLength(2);
+});
+
+test('Sort', () => {
+  render(<App />);
+  const columnSort = screen.getByTestId('column-sort');
+  expect(columnSort).toBeInTheDocument();
+  expect(columnSort).toHaveValue('population');
+  userEvent.selectOptions(columnSort, 'diameter');
+  expect(columnSort).toHaveValue('diameter');
+
+  const ascOption = screen.getByTestId('column-sort-input-asc');
+  const descOption = screen.getByTestId('column-sort-input-desc');
+  expect(ascOption).toBeInTheDocument();
+  expect(descOption).toBeInTheDocument();
+
+  const buttonSort = screen.getByTestId('column-sort-button');
+  expect(buttonSort).toBeInTheDocument();
+});
+
+test('Table', () => {
+  render(<App />);
+  const theadTable = screen.getByText('Name');
+  expect(theadTable).toBeInTheDocument();
 });
