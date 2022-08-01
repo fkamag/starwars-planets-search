@@ -20,13 +20,17 @@ describe('Testando projeto Starwars', () => {
     expect(imgElement).toBeInTheDocument();
   });
 
-  test('FilterByName', () => {
+  test('FilterByName', async () => {
     render(<App />);
     const searchElement = screen.getByPlaceholderText('Search here')
     expect(searchElement).toBeInTheDocument();
     expect(searchElement).toHaveValue('');
-    userEvent.type(searchElement, 'Tatooine');
-    expect(searchElement).toHaveValue('Tatooine');
+    userEvent.type(searchElement, 'oo');
+    expect(searchElement).toHaveValue('oo');
+    const itemTable = await screen.findAllByText('Naboo');
+    expect(itemTable).toHaveLength(1);
+    const item2Table = screen.queryByText('Alderaan');
+    expect(item2Table).not.toBeInTheDocument();
   });
 
   test('FilterByNumber', () => {
@@ -53,11 +57,38 @@ describe('Testando projeto Starwars', () => {
     expect(buttonFilter).toBeInTheDocument();
     userEvent.click(buttonFilter);
 
-    const listFilters = screen.getByTestId('filter');
-    expect(listFilters).toBeInTheDocument();
+    let listFilters = screen.getAllByTestId('filter');
+    expect(listFilters).toHaveLength(1);
     
     const textListFilters = screen.getAllByText('diameter');
     expect(textListFilters).toHaveLength(2);
+
+    expect(columnSearch).toHaveValue('population');
+    userEvent.selectOptions(columnSearch, 'orbital_period');
+    expect(columnSearch).toHaveValue('orbital_period');
+    expect(comparisonSearch).toHaveValue('maior que');
+    userEvent.selectOptions(comparisonSearch, 'maior que');
+    expect(comparisonSearch).toHaveValue('maior que');
+    expect(valueSearch).toHaveValue(0);
+    userEvent.type(valueSearch, '350');
+    expect(valueSearch).toHaveValue(350);
+    userEvent.click(buttonFilter);
+    listFilters = screen.getAllByTestId('filter');
+    expect(listFilters).toHaveLength(2);
+
+    expect(columnSearch).toHaveValue('population');
+    userEvent.selectOptions(columnSearch, 'population');
+    expect(columnSearch).toHaveValue('population');
+    expect(comparisonSearch).toHaveValue('maior que');
+    userEvent.selectOptions(comparisonSearch, 'igual a');
+    expect(comparisonSearch).toHaveValue('igual a');
+    expect(valueSearch).toHaveValue(0);
+    userEvent.type(valueSearch, '30000000');
+    expect(valueSearch).toHaveValue(30000000);
+    userEvent.click(buttonFilter);
+    listFilters = screen.getAllByTestId('filter');
+    expect(listFilters).toHaveLength(3);
+
   });
 
   test('Sort', () => {
