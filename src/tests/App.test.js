@@ -33,7 +33,7 @@ describe('Testando projeto Starwars', () => {
     expect(item2Table).not.toBeInTheDocument();
   });
 
-  test('FilterByNumber', () => {
+  test('FilterByNumber', async () => {
     render(<App />);
     const columnSearch = screen.getByTestId('column-filter');
     expect(columnSearch).toBeInTheDocument();
@@ -89,6 +89,26 @@ describe('Testando projeto Starwars', () => {
     listFilters = screen.getAllByTestId('filter');
     expect(listFilters).toHaveLength(3);
 
+    const itemTable = await screen.findAllByText('Endor');
+    expect(itemTable).toHaveLength(1);
+    const item2Table = screen.queryByText('Alderaan');
+    expect(item2Table).not.toBeInTheDocument();
+
+    let deleteButton = screen.queryAllByRole('button', { name: /excluir/i });
+    expect(deleteButton).toHaveLength(3);
+    userEvent.click(deleteButton[0]);
+    deleteButton = screen.queryAllByRole('button', { name: /excluir/i });
+    expect(deleteButton).toHaveLength(2);
+
+    const removeAllButton = screen.getByRole('button', { name: /remove All Filter/i });
+    expect(removeAllButton).toBeInTheDocument();
+    userEvent.click(removeAllButton);
+    deleteButton = screen.queryAllByRole('button', { name: /excluir/i });
+    expect(deleteButton).toHaveLength(0);
+
+    const sortButton = screen.getByRole('button', { name: /sort/i });
+    expect(sortButton).toBeInTheDocument();
+    userEvent.click(sortButton);
   });
 
   test('Sort', () => {
