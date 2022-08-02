@@ -26,7 +26,7 @@ function Table() {
   listFiltered = listFiltered.sort((a, b) => a.name.localeCompare(b.name));
 
   if (order.isSort) {
-    console.log(listFiltered);
+    // console.log(listFiltered);
     if (order.sort === 'ASC') {
       const numberCompare = -1;
       listFiltered = listFiltered.sort((a, b) => {

@@ -111,13 +111,10 @@ describe('Testando projeto Starwars', () => {
     userEvent.click(sortButton);
   });
 
-  test('Sort', () => {
+  test('Sort', async () => {
     render(<App />);
     const columnSort = screen.getByTestId('column-sort');
     expect(columnSort).toBeInTheDocument();
-    expect(columnSort).toHaveValue('population');
-    userEvent.selectOptions(columnSort, 'diameter');
-    expect(columnSort).toHaveValue('diameter');
 
     const ascOption = screen.getByTestId('column-sort-input-asc');
     const descOption = screen.getByTestId('column-sort-input-desc');
@@ -126,6 +123,20 @@ describe('Testando projeto Starwars', () => {
 
     const buttonSort = screen.getByTestId('column-sort-button');
     expect(buttonSort).toBeInTheDocument();
+
+    expect(columnSort).toHaveValue('population');
+    userEvent.selectOptions(columnSort, 'diameter');
+    expect(columnSort).toHaveValue('diameter');
+    userEvent.click(descOption);
+    userEvent.click(buttonSort);
+    let itemTable = await screen.findAllByTestId('planet-name');
+    console.log(itemTable[0]);
+    // expect(itemTable[0]).toBe('Bespin');
+    userEvent.click(ascOption);
+    userEvent.click(buttonSort);
+    itemTable = await screen.findAllByTestId('planet-name');
+    console.log(itemTable[0]);
+    // expect(itemTable[0]).toBe('Endor');
   });
 
   test('Table and API call', async () => {
